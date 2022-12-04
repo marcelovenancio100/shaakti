@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load custom_filters %}
 
 {% block conteudo %}
   <div class="card-columns mt-4">
@@ -24,7 +25,7 @@
                     <small class="text-muted">
                       {{ post.data_post | naturalday | title }}
                       |
-                      {{ post.numero_comentarios }} comentário(s)
+                      {{ post.numero_comentarios | plural_comentarios }}
                       |
                       {{ post.categoria_post }}
                     </small>
@@ -37,6 +38,14 @@
         </div>
       {% endfor %}
   </div>
+
+  {% if False %}
+    {{ connection.queries | length }}<br>
+
+    {% for querie in connection.queries%}
+      <p>{{ querie }}</p>
+    {% endfor %}
+  {% endif %}
 
   {% include 'partials/_pagination.html' %}
 {% endblock %}
