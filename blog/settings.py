@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'posts',
     'categorias',
     'comentarios',
+    'crispy_forms',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -149,3 +152,13 @@ MESSAGE_TAGS = {
 INSTALLED_APPS += ('django_summernote', )
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesStandaloneBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block titulo %} {{ post.titulo_post | title }} | {% endblock %}
 
@@ -54,30 +55,38 @@
             <form method="POST" action="#envia_comentario">
                 {% csrf_token %}
 
-                    {% for hidden_field in form.hidden_fields %}
-                        {{ hidden_field }}
-                    {% endfor %}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field }}
+                {% endfor %}
 
-                    {% for visible_field in form.visible_fields %}
-                        <div class="form-group">
-                            {{ visible_field.label_tag }} <br>
-                            {{ visible_field }}
-                            {{ visible_field.errors }}
-                        </div>
-                    {% endfor %}
+                {% for visible_field in form.visible_fields %}
+                    <!-- COM CRISPY FORMS -->
+                    {{ visible_field | as_crispy_field }}
+
+                    <!-- SEM CRISPY FORMS -->
+<!--                    <div class="form-group">-->
+<!--                        {{ visible_field.label_tag }} <br>-->
+<!--                        {{ visible_field }}-->
+<!--                        {{ visible_field.errors }}-->
+<!--                    </div>-->
+                {% endfor %}
+
+                <div class="g-recaptcha" data-sitekey="6LdekFojAAAAAOsIv6je3jWoefzrYTTq0BkGQCk_"></div>
+                <br/>
 
                 {% include 'partials/_messages.html' %}
                 <input id="envia_comentario" type="submit" class="btn btn-primary" value="Enviar">
 
-<!--                    <table class="table">-->
-<!--                        {{ form }}-->
-<!--                        <tr>-->
-<!--                            <td colspan="2">-->
-<!--                                {% include 'partials/_messages.html' %}-->
-<!--                                <input id="envia_comentario" type="submit" class="btn btn-primary" value="Enviar">-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
+                <!-- OUTRA POSSÍVEL IMPLEMENTAÇÃO -->
+<!--                <table class="table">-->
+<!--                    {{ form }}-->
+<!--                    <tr>-->
+<!--                        <td colspan="2">-->
+<!--                            {% include 'partials/_messages.html' %}-->
+<!--                            <input id="envia_comentario" type="submit" class="btn btn-primary" value="Enviar">-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </table>-->
             </form>
         </div>
     <div class="col-xl"></div>
